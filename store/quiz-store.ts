@@ -21,7 +21,7 @@ interface State {
 
 const API_URL =
   process.env.NODE_ENV === "production"
-    ? "https://frontend-quizz-app-five.vercel.app/"
+    ? "https://just-my-quiz.vercel.app/"
     : "http://localhost:3000/";
 
 export const useQuestionStore = create<State>()(
