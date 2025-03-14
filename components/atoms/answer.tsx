@@ -4,7 +4,7 @@ import Image from "next/image";
 type AnswerProps = {
   answer: string;
   selectedAns: string;
-  isCorrectUserAnswer: boolean;
+  isCorrectUserAnswer?: boolean;
   handleSelectAnswer: (answer: string) => void;
   index: number;
   answerLabels: string[];

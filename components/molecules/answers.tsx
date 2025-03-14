@@ -19,7 +19,7 @@ const Answers = ({
   goNextQuestion,
 }: AnswersProps) => {
   const [selectedAns, setSelectedAns] = useState("");
-  const [submitted, setSubmitted] = useState<boolean>(false);
+  // const [submitted, setSubmitted] = useState<boolean>(false);
   const { questions, onCompleteQuestions } = useQuestionStore();
   const isCorrectUserAnswer = questions.find(
     (q) => q.id === questionId
@@ -28,7 +28,7 @@ const Answers = ({
   const answerLabels = ["A", "B", "C", "D"];
 
   const handleSelectAnswer = (answer: string) => {
-    if (submitted) return;
+    // if (submitted) return;
     if (selectedAns === answer) {
       setSelectedAns("");
       return;
@@ -47,15 +47,15 @@ const Answers = ({
     //   setSubmitted(false);
     //   return;
     // }
-    if (!selectedAns) return;
-    handleAnswer(questionId, selectedAns);
-    // setSubmitted(true);
-
-    // Auto next question
     if (questions.every((q) => q.userSelectedAnswer != null)) {
       onCompleteQuestions();
       return;
     }
+
+    if (!selectedAns) return;
+    handleAnswer(questionId, selectedAns);
+    // setSubmitted(true);
+
     goNextQuestion();
     setSelectedAns("");
   };
@@ -65,10 +65,10 @@ const Answers = ({
       <ul className="flex flex-col gap-y-4 justify-center w-full">
         {data.map((answer, index) => (
           <Answer
-            key={answer}
+            key={`${answer}-${index}`}
             answer={answer}
             selectedAns={selectedAns}
-            isCorrectUserAnswer={isCorrectUserAnswer!}
+            // isCorrectUserAnswer={isCorrectUserAnswer!}
             handleSelectAnswer={handleSelectAnswer}
             index={index}
             answerLabels={answerLabels}
@@ -80,7 +80,8 @@ const Answers = ({
         onClick={handleSubmit}
         className="w-full bg-purple py-4 px-5 rounded-xl shadow-lg text-white font-semibold text-lg text-center"
       >
-        {submitted ? "Next Question" : "Submit Answer"}
+        {/* {submitted ? "Next Question" : "Submit Answer"} */}
+        Submit Answer
       </button>
     </>
   );
