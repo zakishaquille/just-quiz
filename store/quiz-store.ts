@@ -84,13 +84,13 @@ export const useQuestionStore = create<State>()(
           let resultSummary = "";
           if (score <= 17) {
             resultSummary =
-              "Anda cenderung kurang berusaha dan lebih banyak bergantung pada keadaan. Perlu membangun semangat untuk lebih giat berusaha dan tidak hanya berharap tanpa tindakan.";
+              "Tingkat Ikhtiar Rendah. Anda cenderung kurang berusaha dan lebih banyak bergantung pada keadaan. Perlu membangun semangat untuk lebih giat berusaha dan tidak hanya berharap tanpa tindakan.";
           } else if (score >= 18 && score <= 24) {
             resultSummary =
-              "Anda cukup berusaha, tetapi kadang masih ragu atau mudah menyerah dalam beberapa situasi. Perlu lebih meningkatkan ketekunan dan keyakinan.";
+              "Tingkat Ikhtiar Sedang. Anda cukup berusaha, tetapi kadang masih ragu atau mudah menyerah dalam beberapa situasi. Perlu lebih meningkatkan ketekunan dan keyakinan.";
           } else if (score >= 25) {
             resultSummary =
-              "Anda adalah seseorang yang memiliki semangat ikhtiar luar biasa. Anda percaya pada usaha maksimal dan doa sebagai kunci kesuksesan.";
+              "Tingkat Ikhtiar Tinggi. Anda adalah seseorang yang memiliki semangat ikhtiar luar biasa. Anda percaya pada usaha maksimal dan doa sebagai kunci kesuksesan.";
           }
 
           set({
