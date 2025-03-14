@@ -4,7 +4,7 @@ import { useQuestionStore } from "@/store/quiz-store";
 import Image from "next/image";
 
 const Score = () => {
-  const { selectedQuizz, score } = useQuestionStore();
+  const { selectedQuizz, score, resultSummary } = useQuestionStore();
   if (!selectedQuizz) return null;
   return (
     <div className="flex flex-col gap-4 bg-[#fff] dark:bg-slate p-10 rounded-xl">
@@ -23,8 +23,11 @@ const Score = () => {
         <p className="text-dark-blue dark:text-white font-bold xs:text-5xl sm:text-5xl lg:text-9xl">
           {score}
         </p>
-        <span className="text-dark-blue dark:text-white text-sm font-thin">
+        {/* <span className="text-dark-blue dark:text-white text-sm font-thin">
           Out of {selectedQuizz.questions.length}
+        </span> */}
+        <span className="text-dark-blue dark:text-white text-md font-thin">
+          {resultSummary}
         </span>
       </div>
     </div>

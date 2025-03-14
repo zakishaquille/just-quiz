@@ -37,19 +37,27 @@ const Answers = ({
   };
 
   const handleSubmit = () => {
-    if (submitted) {
-      if (questions.every((q) => q.userSelectedAnswer != null)) {
-        onCompleteQuestions();
-        return;
-      }
-      goNextQuestion();
-      setSelectedAns("");
-      setSubmitted(false);
-      return;
-    }
+    // if (submitted) {
+    //   if (questions.every((q) => q.userSelectedAnswer != null)) {
+    //     onCompleteQuestions();
+    //     return;
+    //   }
+    //   goNextQuestion();
+    //   setSelectedAns("");
+    //   setSubmitted(false);
+    //   return;
+    // }
     if (!selectedAns) return;
     handleAnswer(questionId, selectedAns);
-    setSubmitted(true);
+    // setSubmitted(true);
+
+    // Auto next question
+    if (questions.every((q) => q.userSelectedAnswer != null)) {
+      onCompleteQuestions();
+      return;
+    }
+    goNextQuestion();
+    setSelectedAns("");
   };
 
   return (

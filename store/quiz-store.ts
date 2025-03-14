@@ -9,6 +9,7 @@ interface State {
   currentQuestion: number;
   hasCompleteAll: boolean;
   score: number;
+  resultSummary: string;
   selectQuizz: (quizz: Quizz) => void;
   fetchQuizzes: () => Promise<void>;
   selectAnswer: (questionId: number, selectedAnswer: string) => void;
@@ -30,6 +31,7 @@ export const useQuestionStore = create<State>()(
         quizzes: [],
         questions: [],
         score: 0,
+        resultSummary: "",
         selectedQuizz: null,
         currentQuestion: 0,
         hasCompleteAll: false,
@@ -58,14 +60,17 @@ export const useQuestionStore = create<State>()(
           // obtenemos la información de la pregunta
           const questionInfo = newQuestions[questionIndex];
           // averiguamos si el usuario ha seleccionado la respuesta correcta
-          const isCorrectUserAnswer =
-            questionInfo.answer === selectedAnswer;
-
+          // const isCorrectUserAnswer = questionInfo.answer === selectedAnswer;
+          const answerIndex = questionInfo.options.findIndex(
+            (a) => a === selectedAnswer
+          );
+          const answerPoint = answerIndex === 0 ? 3 : answerIndex === 1 ? 2 : 1;
 
           // cambiar esta información en la copia de la pregunta
           newQuestions[questionIndex] = {
             ...questionInfo,
-            isCorrectUserAnswer,
+            isCorrectUserAnswer: true,
+            point: answerPoint,
             userSelectedAnswer: selectedAnswer,
           };
           // actualizamos el estado
@@ -73,9 +78,27 @@ export const useQuestionStore = create<State>()(
         },
         onCompleteQuestions: () => {
           const { questions } = get();
-          const score = questions.filter((q) => q.isCorrectUserAnswer).length;
+          // const score = questions.filter((q) => q.isCorrectUserAnswer).length;
+          const score = questions.reduce((acc, q) => acc + (q.point || 0), 0);
 
-          set({ hasCompleteAll: true, currentQuestion: 0, score });
+          let resultSummary = "";
+          if (score <= 17) {
+            resultSummary =
+              "Anda cenderung kurang berusaha dan lebih banyak bergantung pada keadaan. Perlu membangun semangat untuk lebih giat berusaha dan tidak hanya berharap tanpa tindakan.";
+          } else if (score >= 18 && score <= 24) {
+            resultSummary =
+              "Anda cukup berusaha, tetapi kadang masih ragu atau mudah menyerah dalam beberapa situasi. Perlu lebih meningkatkan ketekunan dan keyakinan.";
+          } else if (score >= 25) {
+            resultSummary =
+              "Anda adalah seseorang yang memiliki semangat ikhtiar luar biasa. Anda percaya pada usaha maksimal dan doa sebagai kunci kesuksesan.";
+          }
+
+          set({
+            hasCompleteAll: true,
+            currentQuestion: 0,
+            score,
+            resultSummary,
+          });
         },
         goNextQuestion: () => {
           const { currentQuestion, questions } = get();
@@ -109,6 +132,7 @@ export const useQuestionStore = create<State>()(
     },
     {
       name: "quizz",
+      version: 1,
     }
   )
 );
